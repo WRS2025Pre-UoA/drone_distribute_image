@@ -31,7 +31,7 @@ class DroneDistributeImage(Node):
         self.bridge = CvBridge()
 
         # guiの準備
-        self.gui_publisher = self.create_publisher(Image, "/gui", 1)
+        self.gui_publisher = self.create_publisher(Image, "gui", 10)
         self.timer = self.create_timer(0.1, self.publish_gui)
         self.image_index = 0
 
@@ -41,13 +41,13 @@ class DroneDistributeImage(Node):
 
         # 各Publisher
         self.image_publishers = [
-            self.create_publisher(Image, "/pressure_image", 1),
-            self.create_publisher(Image, "/qr_image", 1),
-            self.create_publisher(Image, "/rust_image", 1),
-            self.create_publisher(Image, "/crack_image", 1),
-            self.create_publisher(Image, "/temperature_image", 1),
+            self.create_publisher(Image, "pressure_image", 1),
+            self.create_publisher(Image, "qr_image", 1),
+            self.create_publisher(Image, "rust_image", 1),
+            self.create_publisher(Image, "crack_image", 1),
+            self.create_publisher(Image, "temperature_image", 1),
         ]
-        self.send_publisher = self.create_publisher(String, "/send_topic", 1)
+        self.send_publisher = self.create_publisher(String, "send_topic", 1)
 
         button_size = (150, 70)
         self.buttons = [
