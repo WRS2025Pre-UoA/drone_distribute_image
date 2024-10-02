@@ -43,7 +43,7 @@ class DroneDistributeImage(Node):
         self.image_publishers = [
             self.create_publisher(Image, "pressure_image", 1),
             self.create_publisher(Image, "qr_image", 1),
-            self.create_publisher(Image, "qr_image_manual", 1),
+            self.create_publisher(String, "qr_image_manual", 1),
             self.create_publisher(Image, "crack_image", 1),
             self.create_publisher(Image, 'situation_image', 1),
             self.create_publisher(Image, 'bulb_image', 1),
@@ -124,7 +124,11 @@ class DroneDistributeImage(Node):
                 try:
                     ros_image = self.bridge.cv2_to_imgmsg(
                         self.pub_image, "bgr8")
-                    self.image_publishers[i].publish(ros_image)
+                    
+                    if i != 2:
+                        self.image_publishers[i].publish(ros_image)
+                    else:
+                        self.image_publishers[2].publish(String())
                 except CvBridgeError as e:
                     self.get_logger().error(e)
                     return
