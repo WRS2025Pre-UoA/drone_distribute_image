@@ -43,6 +43,7 @@ class DroneDistributeImage(Node):
         self.image_publishers = [
             self.create_publisher(Image, "pressure_image", 1),
             self.create_publisher(Image, "qr_image", 1),
+            self.create_publisher(Image, "qr_image_hand", 1),
             self.create_publisher(Image, "crack_image", 1),
             self.create_publisher(Image, 'situation_image', 1),
             self.create_publisher(Image, 'bulb_image', 1),
@@ -56,7 +57,7 @@ class DroneDistributeImage(Node):
             Button((20*(1+i)+button_size[0]*i, 50), button_size) for i in range(self.num_of_image_publishers)
         ]
         self.send_button = Button(
-            (20*(self.num_of_image_publishers+1)+button_size[0]*5, 50), button_size)
+            (20*(self.num_of_image_publishers+1)+button_size[0]*self.num_of_image_publishers, 50), button_size)
 
         # 画像変更ボタン
         self.prev_button = Button((20, self.Height-70), (100, 50))
@@ -97,7 +98,7 @@ class DroneDistributeImage(Node):
                           size=1, color=(255, 255, 255), thickness=2)
 
         # ボタンの表示
-        texts = ["Meter", "QR", "Crack", "Photo", "Bulb"]
+        texts = ["Meter", "QR","QR_hand" ,"Crack", "Photo", "Bulb"]
         background_color = (180, 180, 180)
         for btn, text in zip(self.buttons, texts):
             tool.draw_button(btn, text, color=background_color,
